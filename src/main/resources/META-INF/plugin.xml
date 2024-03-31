@@ -1,18 +1,17 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.stingnevermore.uniapphelper</id>
-    <name>uniapp-helper</name>
-    <vendor>stingnevermore</vendor>
+    <id>com.nevermore.uniapphelper</id>
+    <name>Uniapp Helper</name>
+    <vendor>Nevermore</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>cn.fjdmy.uniapp</depends>
+
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.stingnevermore.uniapphelper.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <psi.referenceContributor language="Vue"
+                                  implementation="com.nevermore.uniapphelper.psi.EasyComReferenceContributor"/>
     </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.stingnevermore.uniapphelper.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
-    </applicationListeners>
 </idea-plugin>
