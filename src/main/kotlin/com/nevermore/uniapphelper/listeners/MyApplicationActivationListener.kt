@@ -1,4 +1,4 @@
-package com.github.stingnevermore.uniapphelper.listeners
+package com.nevermore.uniapphelper.listeners
 
 import com.intellij.openapi.application.ApplicationActivationListener
 import com.intellij.openapi.diagnostic.thisLogger

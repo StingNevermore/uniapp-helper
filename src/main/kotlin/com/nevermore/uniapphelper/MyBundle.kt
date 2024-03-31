@@ -1,4 +1,4 @@
-package com.github.stingnevermore.uniapphelper
+package com.nevermore.uniapphelper
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls
