@@ -5,6 +5,8 @@
     <vendor>Nevermore</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>JavaScript</depends>
+    <depends>org.jetbrains.plugins.vue</depends>
     <depends>cn.fjdmy.uniapp</depends>
 
 
@@ -13,5 +15,9 @@
     <extensions defaultExtensionNs="com.intellij">
         <psi.referenceContributor language="Vue"
                                   implementation="com.nevermore.uniapphelper.psi.EasyComReferenceContributor"/>
+        <stubIndex implementation="com.nevermore.uniapphelper.index.EasyComIndex"/>
+    </extensions>
+    <extensions defaultExtensionNs="JavaScript">
+        <frameworkIndexingHandler implementation="com.nevermore.uniapphelper.index.EasyComIndexingHandler"/>
     </extensions>
 </idea-plugin>
