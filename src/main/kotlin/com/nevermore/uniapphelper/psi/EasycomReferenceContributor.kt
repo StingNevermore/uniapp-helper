@@ -20,7 +20,7 @@ import org.jetbrains.vuejs.lang.html.VueLanguage
  * @author nevermore
  * @since
  */
-class EasyComReferenceContributor : PsiReferenceContributor() {
+class EasycomReferenceContributor : PsiReferenceContributor() {
 
     override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
         val easycomConfigurations = EasycomConfiguration.configurations
@@ -31,6 +31,7 @@ class EasyComReferenceContributor : PsiReferenceContributor() {
                 override fun getReferencesByElement(
                     element: PsiElement, context: ProcessingContext
                 ): Array<PsiReference> {
+                    println()
                     val value = element.asXmlTagToGetTagName()
                     return arrayOf(EasyComReference(element, TextRange(1, value.length + 1), easycomConfigurations))
                 }
@@ -38,23 +39,22 @@ class EasyComReferenceContributor : PsiReferenceContributor() {
             })
     }
 
-    private fun toPattern(it: EasycomConfiguration) =
-        xmlTag().withLanguage(VueLanguage.INSTANCE).withName(string().matches(it.vueTagPatternString))
+    private fun toPattern(easycomConfiguration: EasycomConfiguration) =
+        xmlTag().withLanguage(VueLanguage.INSTANCE).withName(string().matches(easycomConfiguration.vueTagPatternString))
 }
 
 class EasyComReference(
     element: PsiElement,
     textRange: TextRange,
     private val easycomConfigurations: EasycomConfigurations
-) :
-    PsiReferenceBase<PsiElement>(element, textRange) {
+) : PsiReferenceBase<PsiElement>(element, textRange) {
 
     private val tagName: String = element.asXmlTagToGetTagName()
     private val psiFile by lazy { element.containingFile }
 
     override fun resolve(): PsiElement? {
         val isEasycomElement = easycomConfigurations
-            .filter { psiFile.virtualFile.path.startsWith(it.pagesJsonFile.parent.path) }
+            .filter { it.containsFileOf(psiFile) }
             .any { easycomConfiguration -> easycomConfiguration.isEasycomTag(element.asXmlTagToGetTagName()) }
 
         val result = mutableListOf<ResolveResult>()
@@ -70,7 +70,7 @@ class EasyComReference(
                     return@Processor true
                 })
         }
-        return result.firstOrNull()?.element
+        return result.firstOrNull()?.element?.parent
     }
 }
 

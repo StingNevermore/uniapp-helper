@@ -14,8 +14,13 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <psi.referenceContributor language="Vue"
-                                  implementation="com.nevermore.uniapphelper.psi.EasyComReferenceContributor"/>
+                                  implementation="com.nevermore.uniapphelper.psi.EasycomReferenceContributor"/>
         <stubIndex implementation="com.nevermore.uniapphelper.index.EasyComIndex"/>
+        <daemon.highlightInfoFilter implementation="com.nevermore.uniapphelper.psi.EasycomHighlightInfoFilter"/>
+        <!--        <lang.documentationProvider language="Vue" order="first"-->
+        <!--                                    implementationClass="com.nevermore.uniapphelper.psi.EasycomDocumentationProvider"/>-->
+        <!--        <platform.backend.documentation.psiTargetProvider-->
+        <!--                implementation="com.nevermore.uniapphelper.psi.EasycomDocumentationTargetProvider"/>-->
     </extensions>
     <extensions defaultExtensionNs="JavaScript">
         <frameworkIndexingHandler implementation="com.nevermore.uniapphelper.index.EasyComIndexingHandler"/>

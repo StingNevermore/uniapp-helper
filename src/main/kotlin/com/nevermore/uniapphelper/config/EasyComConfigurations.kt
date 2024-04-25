@@ -3,8 +3,11 @@ package com.nevermore.uniapphelper.config
 import com.google.gson.Gson
 import com.intellij.openapi.project.ProjectManager
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiFile
 import com.intellij.psi.search.FilenameIndex.getVirtualFilesByName
 import com.intellij.psi.search.GlobalSearchScope.projectScope
+import com.intellij.psi.xml.XmlTag
 import com.intellij.util.asSafely
 import java.io.InputStreamReader
 import java.util.regex.Pattern
@@ -32,7 +35,16 @@ data class EasycomConfiguration(
     }
 
     fun isEasycomTag(tagName: String) = pattern.matcher(tagName).matches()
+
+    fun containsFileOf(psiFile: PsiFile) = psiFile.virtualFile.path.startsWith(pagesJsonFile.parent.path)
+
 }
+
+fun PsiElement?.isEasycomElement(): Boolean {
+    val name = this?.asSafely<XmlTag>()?.name ?: return false
+    return EasycomConfiguration.configurations.any { it.isEasycomTag(name) }
+}
+
 
 private fun initializeEasycomConfigurations() =
     ProjectManager.getInstance().openProjects
